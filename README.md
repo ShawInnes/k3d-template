@@ -8,7 +8,7 @@ This is a repo with examples for getting a k3d development environment up and ru
 * Redis
 * Seq logging service
 * Unleash feature management services
-* Nginx ingress controller
+* [Nginx ingress controller](https://kubernetes.github.io/ingress-nginx)
 * Reloader for triggered deployment restarts
 
 ## Requirements
@@ -27,7 +27,7 @@ It utilises the `localtest.me` domain and exposes services at the followng end p
 | seq.localtest.me | seq.seq.svc.cluster.local |
 | n/a | postgres-postgresql.postgres.svc.cluster.local |
 | development.localtest.me | app.development.svc.cluster.local |
-| staging.localtest.me | app.staging.svc.cluster.local |
+| test.localtest.me | app.test.svc.cluster.local |
 | production.localtest.me | app.production.svc.cluster.local |
 | unleash.localtest.me | unleash.unleash.svc.cluster.local |
 
@@ -70,21 +70,10 @@ Your k3d kubernetes cluster is now started.  You can confirm this by running `ku
 
 
 
-## Create a cluster (old school manual way)
-
-k3d cluster create --servers 1 --agents 3 --api-port 6443 --port 443:443@loadbalancer --port 80:80@loadbalancer --volume $PWD/volume:/mnt/k3dvol --registry-create k3d-registry:5000 --k3s-arg "--disable=traefik@server:0" --wait
-
-## Load a docker image
-
-k3d image import containous/whoami
-
 ## Install K9s 
 
 brew install k9s
-k9s
-
-## Ngnix Ingress
-https://kubernetes.github.io/ingress-nginx
+k9s --context k3d-dev
 
 ## ArgoCD
 https://argoproj.github.io/
