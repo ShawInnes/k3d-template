@@ -9,8 +9,8 @@ primary:
     mountPath: /bitnami/postgresql
     subPath: ""
 
-# volumePermissions:
-#   enabled: true 
+volumePermissions:
+  enabled: true 
 
 
   
