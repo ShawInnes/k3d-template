@@ -1,0 +1,22 @@
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  path: /
+  hosts:
+    - host: unleash.localtest.me
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+
+postgresql:
+  enabled: false
+
+dbConfig:
+  host: postgres-postgresql.postgres.svc.cluster.local
+  port: 5432
+  database: unleash
+  user: unleash
+  useExistingSecret: 
+    name: unleash-secrets
+    key: unleash-password

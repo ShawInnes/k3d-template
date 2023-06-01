@@ -1,0 +1,6 @@
+%{ for database, password in databases }
+CREATE USER ${database};
+ALTER USER ${database} WITH ENCRYPTED PASSWORD '${password}';
+CREATE DATABASE ${database} WITH OWNER ${database};
+GRANT ALL PRIVILEGES ON DATABASE ${database} TO ${database};
+%{ endfor ~}

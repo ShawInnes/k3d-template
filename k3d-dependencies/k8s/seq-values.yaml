@@ -1,0 +1,29 @@
+image:
+  tag: latest
+
+persistence:
+  enabled: true
+  existingClaim: seq
+
+resources:
+  limits:
+    memory: 2Gi
+
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+
+ui:
+  ingress:
+    enabled: true
+    path: /
+    hosts:
+      - seq.localtest.me
+
+ingestion:
+  ingress:
+    enabled: true
+    path: /
+    hosts:
+      - ingestion.seq.localtest.me
+      

@@ -1,0 +1,13 @@
+
+primary:
+  initdb:
+    scriptsSecret: postgres-init
+
+  persistence:
+    enabled: true
+    existingClaim: postgres
+  
+auth:
+  existingSecret: postgres-secrets
+  secretKeys: 
+    adminPasswordKey: postgres
