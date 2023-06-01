@@ -6,8 +6,11 @@ primary:
   persistence:
     enabled: true
     existingClaim: postgres
+    mountPath: /bitnami/postgresql
+    subPath: ""
+
+# volumePermissions:
+#   enabled: true 
+
+
   
-auth:
-  existingSecret: postgres-secrets
-  secretKeys: 
-    adminPasswordKey: postgres

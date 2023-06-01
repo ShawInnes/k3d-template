@@ -7,6 +7,6 @@ variable "environments" {
 }
 
 variable "install_unleash" {
-  default = true
+  default = false
   type = bool
 }

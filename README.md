@@ -8,7 +8,8 @@ This is a repo with examples for getting a k3d development environment up and ru
 * Redis
 * Seq logging service
 * Unleash feature management services
-
+* Nginx ingress controller
+* Reloader for triggered deployment restarts
 
 ## Requirements
 
