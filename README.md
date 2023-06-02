@@ -2,9 +2,10 @@
 
 This is a repo with examples for getting a k3d development environment up and running with minimal fuss.
 
-> :warning: **This repo contains hard-coded passwords**
+
+>## :warning: **This repo contains hard-coded passwords**
 > 
-> This is intended for local development only, if you want to migrate to using in a production scenario, please remove hard-coded passwords and take a more secure approach!
+> This is intended for local development only, if you plan to migrate to using any parts of this in a production scenario, take care to remove hard-coded passwords and consider a more secure approach such as dynamically generated passwords!
 
 ## Services
 
@@ -13,6 +14,7 @@ This is a repo with examples for getting a k3d development environment up and ru
 * Seq logging service
 * Unleash feature management services
 * [Nginx ingress controller](https://kubernetes.github.io/ingress-nginx)
+* Whoami service, loading configuration from ConfigMaps
 * Reloader for triggered deployment restarts
 
 ## Requirements
