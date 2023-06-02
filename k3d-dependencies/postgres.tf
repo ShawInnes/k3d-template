@@ -38,6 +38,7 @@ spec:
 PVC
 }
 
+# https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
 resource "helm_release" "postgresql" {
   name      = "postgres"
   namespace = kubernetes_namespace.postgres.id

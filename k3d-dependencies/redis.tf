@@ -1,14 +1,18 @@
+locals {
+  redis_password = "redis"
+  # random_password.redis.result
+}
+
 resource "kubernetes_namespace" "redis" {
   metadata {
     name = "redis"
   }
 }
 
-resource "random_password" "redis" {
-  length   = 16
-  special  = false
-}
-
+# resource "random_password" "redis" {
+#   length   = 16
+#   special  = false
+# }
 
 resource "kubectl_manifest" "redis-secrets" {
   yaml_body = <<YAML
@@ -19,7 +23,7 @@ metadata:
   namespace: ${kubernetes_namespace.redis.id}
 type: Opaque
 data:
-  redis: ${base64encode(random_password.redis.result)}
+  redis: ${base64encode(local.redis_password)}
 YAML
 }
 

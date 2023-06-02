@@ -1,3 +1,7 @@
+locals {
+  unleash_password = "unleash"
+  # random_password.database["unleash"].result
+}
 
 resource "kubernetes_namespace" "unleash" {
   metadata {
@@ -15,7 +19,7 @@ metadata:
   namespace: ${kubernetes_namespace.unleash[count.index].id}  
 type: Opaque
 data:
-  unleash-password: ${base64encode(random_password.database["unleash"].result)}
+  unleash-password: ${base64encode(local.unleash_password)}
 PVC
 
   count = var.install_unleash ? 1 : 0

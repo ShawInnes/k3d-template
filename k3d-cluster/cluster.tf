@@ -27,6 +27,22 @@ resource "k3d_cluster" "dev" {
     ]
   }
 
+  port {
+    host_port      = 5432
+    container_port = 5432
+    node_filters = [
+      "loadbalancer",
+    ]
+  }
+
+  port {
+    host_port      = 6379
+    container_port = 6379
+    node_filters = [
+      "loadbalancer",
+    ]
+  }
+
   k3d {
     disable_load_balancer = false
     disable_image_volume  = false
@@ -34,7 +50,7 @@ resource "k3d_cluster" "dev" {
 
   k3s {
     extra_args {
-      arg = "--disable=traefik"
+      arg          = "--disable=traefik"
       node_filters = ["server:*"]
     }
   }
@@ -44,5 +60,11 @@ resource "k3d_cluster" "dev" {
     switch_current_context    = false
   }
 
+  registries {
+    create {
+      name = "registry.localtest.me"
+      host_port = 5500
+    }
+  }
 }
 

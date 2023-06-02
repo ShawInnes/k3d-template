@@ -1,7 +1,15 @@
 
+image:
+  registry: docker.io
+  repository: bitnami/postgresql
+  tag: 13-debian-11
+
 primary:
   initdb:
     scriptsSecret: postgres-init
+
+  # service:
+  #   type: LoadBalancer
 
   persistence:
     enabled: true

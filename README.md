@@ -31,12 +31,17 @@ It utilises the `localtest.me` domain and exposes services at the followng end p
 | external address | cluster address | namespace | credentials |
 | -- | -- | -- | -- |
 | seq.localtest.me | seq.seq.svc.cluster.local | seq | admin/seq4all |
-| n/a | postgres-postgresql.postgres.svc.cluster.local | postgres | secret: postgres-secrets |
-| n/a | redis-master.redis.svc.cluster.local | redis | secret: redis-secrets | 
 | unleash.localtest.me | unleash.unleash.svc.cluster.local | unleash | admin/unleash4all |
-| development.localtest.me | app.development.svc.cluster.local | development | |
-| test.localtest.me | app.test.svc.cluster.local | test | |
-| production.localtest.me | app.production.svc.cluster.local | production | |
+| development.localtest.me | app.development.svc.cluster.local | development | n/a |
+| test.localtest.me | app.test.svc.cluster.local | test | n/a |
+| production.localtest.me | app.production.svc.cluster.local | production | n/a |
+
+The following additional TCP ports are exposed for the ease of development and testing:
+
+| external port | cluster address | namespace | credentials |
+| -- | -- | -- | -- |
+| tcp/6379 | redis-master.redis.svc.cluster.local | redis | secrets: redis-secrets | 
+| tcp/5432 | postgres-postgresql.postgres.svc.cluster.local | postgres | secrets: postgres-secrets |
 
 ### Step 1. **k3d-cluster** Create a k3d Cluster
 
