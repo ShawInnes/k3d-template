@@ -75,17 +75,28 @@ Your k3d kubernetes cluster is now started.  You can confirm this by running `ku
 2. `terraform init`
 3. `terraform apply -auto-approve`
 
+You can now access your cluster using kubectl or k9s
 
+```
+kubectl --context k3d-dev ...
+```
 
-## Install K9s 
+or
 
+```
 brew install k9s
 k9s --context k3d-dev
+```
 
-## ArgoCD
+## TODO / Future Work
+
+
+###  ArgoCD
 https://argoproj.github.io/
 
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+### Devspace
 
 https://www.devspace.sh/#ui
