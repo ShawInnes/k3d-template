@@ -1,6 +1,10 @@
 image:
   tag: latest
 
+firstRunAdminUsername: "admin"
+# seq4all
+firstRunAdminPasswordHash: "FDiO9R8cfcxa3NKH2C3B4gKrpRC34pNZB+HMsQtk+Tqwo6swwA=="
+
 persistence:
   enabled: true
   existingClaim: seq

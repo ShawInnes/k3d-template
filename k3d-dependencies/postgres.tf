@@ -21,28 +21,6 @@ data:
 YAML
 }
 
-
-resource "kubectl_manifest" "postgres-pv" {
-  yaml_body = <<PV
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: postgres
-spec:
-  storageClassName: local-path
-  capacity:
-    storage: 8Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/mnt/k3dvol/postgres"
-PV
-
-  depends_on = [
-    kubernetes_namespace.postgres
-  ]
-}
-
 resource "kubectl_manifest" "postgres-pvc" {
   yaml_body = <<PVC
 apiVersion: v1
@@ -58,10 +36,6 @@ spec:
     requests:
       storage: 8Gi
 PVC
-
-  depends_on = [
-    kubectl_manifest.postgres-pv
-  ]
 }
 
 resource "helm_release" "postgresql" {

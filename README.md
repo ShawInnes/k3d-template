@@ -2,6 +2,10 @@
 
 This is a repo with examples for getting a k3d development environment up and running with minimal fuss.
 
+> :warning: **This repo contains hard-coded passwords**
+> 
+> This is intended for local development only, if you want to migrate to using in a production scenario, please remove hard-coded passwords and take a more secure approach!
+
 ## Services
 
 * Postgresql with multiple databases
@@ -22,14 +26,15 @@ This is a repo with examples for getting a k3d development environment up and ru
 
 It utilises the `localtest.me` domain and exposes services at the followng end points:
 
-| external address | cluster address |
-| -- | -- |
-| seq.localtest.me | seq.seq.svc.cluster.local |
-| n/a | postgres-postgresql.postgres.svc.cluster.local |
-| development.localtest.me | app.development.svc.cluster.local |
-| test.localtest.me | app.test.svc.cluster.local |
-| production.localtest.me | app.production.svc.cluster.local |
-| unleash.localtest.me | unleash.unleash.svc.cluster.local |
+| external address | cluster address | namespace | credentials |
+| -- | -- | -- | -- |
+| seq.localtest.me | seq.seq.svc.cluster.local | seq | admin/seq4all |
+| n/a | postgres-postgresql.postgres.svc.cluster.local | postgres | secret: postgres-secrets |
+| n/a | redis-master.redis.svc.cluster.local | redis | secret: redis-secrets | 
+| unleash.localtest.me | unleash.unleash.svc.cluster.local | unleash | admin/unleash4all |
+| development.localtest.me | app.development.svc.cluster.local | development | |
+| test.localtest.me | app.test.svc.cluster.local | test | |
+| production.localtest.me | app.production.svc.cluster.local | production | |
 
 ### Step 1. **k3d-cluster** Create a k3d Cluster
 

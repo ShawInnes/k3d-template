@@ -4,26 +4,6 @@ resource "kubernetes_namespace" "seq" {
   }
 }
 
-resource "kubectl_manifest" "seq-pv" {
-  yaml_body = <<PV
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: seq
-spec:
-  storageClassName: local-path
-  capacity:
-    storage: 8Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/mnt/k3dvol/seq"
-PV
-
-  depends_on = [
-    kubernetes_namespace.seq
-  ]
-}
 
 resource "kubectl_manifest" "seq-pvc" {
   yaml_body = <<PVC
@@ -40,12 +20,9 @@ spec:
     requests:
       storage: 8Gi
 PVC
-
-  depends_on = [
-    kubectl_manifest.seq-pv
-  ]
 }
 
+# https://github.com/datalust/helm.datalust.co/blob/main/charts/seq/values.yaml
 resource "helm_release" "seq" {
   name       = "seq"
   repository = "https://helm.datalust.co"

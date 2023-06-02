@@ -1,0 +1,12 @@
+
+architecture: standalone
+
+auth:
+  existingSecret: "redis-secrets"
+  existingSecretPasswordKey: "redis"
+
+master:
+  persistence:
+    enabled: true
+    existingClaim: redis
+    mountPath: /data
