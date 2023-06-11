@@ -12,7 +12,6 @@ This is a repo with examples for getting a k3d development environment up and ru
 * Postgresql with multiple databases
 * Redis
 * Seq logging service
-* Unleash feature management services
 * [Nginx ingress controller](https://kubernetes.github.io/ingress-nginx)
 * Whoami service, loading configuration from ConfigMaps
 * Reloader for triggered deployment restarts
@@ -31,9 +30,8 @@ It utilises the `localtest.me` domain and exposes services at the followng end p
 | external address | cluster address | namespace | credentials |
 | -- | -- | -- | -- |
 | seq.localtest.me | seq.seq.svc.cluster.local | seq | admin/seq4all |
-| unleash.localtest.me | unleash.unleash.svc.cluster.local | unleash | admin/unleash4all |
 | development.localtest.me | app.development.svc.cluster.local | development | n/a |
-| test.localtest.me | app.test.svc.cluster.local | test | n/a |
+| staging.localtest.me | app.staging.svc.cluster.local | staging | n/a |
 | production.localtest.me | app.production.svc.cluster.local | production | n/a |
 
 The following additional TCP ports are exposed for the ease of development and testing:
@@ -77,8 +75,7 @@ Your k3d kubernetes cluster is now started.  You can confirm this by running `ku
 ### Step 3. **k3d-workloads** directory
 
 1. `cd k3d-workload`
-2. `terraform init`
-3. `terraform apply -auto-approve`
+2. `kubectl --context k3d-dev apply -f .`
 
 You can now access your cluster using kubectl or k9s
 

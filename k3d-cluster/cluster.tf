@@ -5,12 +5,6 @@ resource "k3d_cluster" "dev" {
 
   network = "k3d-dev-net"
 
-  # volume {
-  #   source      = "${path.cwd}/volume"
-  #   destination = "/mnt/k3dvol"
-  #   node_filters = ["agent:*"]
-  # }
-
   port {
     host_port      = 443
     container_port = 443
@@ -57,7 +51,7 @@ resource "k3d_cluster" "dev" {
 
   kubeconfig {
     update_default_kubeconfig = true
-    switch_current_context    = false
+    switch_current_context    = true
   }
 
   registries {

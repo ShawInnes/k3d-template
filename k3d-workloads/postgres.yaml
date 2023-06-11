@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgres
+  namespace: argocd
+spec:
+  project: default
+  
+  source:
+    repoURL: 'https://charts.bitnami.com/bitnami'
+    targetRevision: 12.5.6
+    chart: postgresql
+    helm:
+      values: |
+        image:
+          registry: docker.io
+          repository: bitnami/postgresql
+          tag: 13-debian-11
+
+        primary:
+          initdb:
+            scriptsSecret: postgres-init
+
+          persistence:
+            enabled: true
+            existingClaim: postgres
+            mountPath: /bitnami/postgresql
+            subPath: ""
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: postgres
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false

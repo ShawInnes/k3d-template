@@ -1,12 +1,7 @@
 variable "databases" {
-  default = ["unleash"]
+  default = []
 }
 
 variable "environments" {
-  default = ["development", "test", "production"]
-}
-
-variable "install_unleash" {
-  default = false
-  type = bool
+  default = ["development", "staging", "production"]
 }

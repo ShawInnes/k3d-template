@@ -1,18 +1,13 @@
-locals {
-  redis_password = "redis"
-  # random_password.redis.result
-}
-
 resource "kubernetes_namespace" "redis" {
   metadata {
     name = "redis"
   }
 }
 
-# resource "random_password" "redis" {
-#   length   = 16
-#   special  = false
-# }
+resource "random_password" "redis" {
+  length   = 16
+  special  = false
+}
 
 resource "kubectl_manifest" "redis-secrets" {
   yaml_body = <<YAML
@@ -23,7 +18,7 @@ metadata:
   namespace: ${kubernetes_namespace.redis.id}
 type: Opaque
 data:
-  redis: ${base64encode(local.redis_password)}
+  redis: ${base64encode(random_password.redis.result)}
 YAML
 }
 
@@ -44,22 +39,22 @@ spec:
 PVC
 }
 
-# https://github.com/bitnami/charts/blob/main/bitnami/redis/values.yaml
-resource "helm_release" "redis" {
-  name      = "redis"
-  namespace = kubernetes_namespace.redis.id
-  wait      = true
-  timeout   = 600
+# # https://github.com/bitnami/charts/blob/main/bitnami/redis/values.yaml
+# resource "helm_release" "redis" {
+#   name      = "redis"
+#   namespace = kubernetes_namespace.redis.id
+#   wait      = true
+#   timeout   = 600
 
-  values = [
-    "${file("./k8s/redis-values.yaml")}"
-  ]
+#   values = [
+#     "${file("./k8s/redis-values.yaml")}"
+#   ]
 
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "redis"
+#   repository = "https://charts.bitnami.com/bitnami"
+#   chart      = "redis"
 
-  depends_on = [ 
-    kubectl_manifest.redis-secrets,
-    kubectl_manifest.redis-pvc
-   ]
-}
+#   depends_on = [ 
+#     kubectl_manifest.redis-secrets,
+#     kubectl_manifest.redis-pvc
+#    ]
+# }

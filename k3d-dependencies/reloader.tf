@@ -4,16 +4,16 @@ resource "kubernetes_namespace" "reloader" {
   }
 }
 
-resource "helm_release" "reloader" {
-  name       = "reloader"
-  repository = "https://stakater.github.io/stakater-charts"
-  chart      = "reloader"
+# resource "helm_release" "reloader" {
+#   name       = "reloader"
+#   repository = "https://stakater.github.io/stakater-charts"
+#   chart      = "reloader"
 
-  set {
-    name  = "reloader.reloadStrategy"
-    value = "annotations"
-  }
+#   set {
+#     name  = "reloader.reloadStrategy"
+#     value = "annotations"
+#   }
 
-  namespace = kubernetes_namespace.reloader.id
-}
+#   namespace = kubernetes_namespace.reloader.id
+# }
 

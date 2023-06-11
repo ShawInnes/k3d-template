@@ -38,23 +38,23 @@ spec:
 PVC
 }
 
-# https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
-resource "helm_release" "postgresql" {
-  name      = "postgres"
-  namespace = kubernetes_namespace.postgres.id
-  wait      = true
-  timeout   = 600
+# # https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
+# resource "helm_release" "postgresql" {
+#   name      = "postgres"
+#   namespace = kubernetes_namespace.postgres.id
+#   wait      = true
+#   timeout   = 600
 
-  values = [
-    "${file("./k8s/postgres-values.yaml")}"
-  ]
+#   values = [
+#     "${file("./k8s/postgres-values.yaml")}"
+#   ]
 
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "postgresql"
+#   repository = "https://charts.bitnami.com/bitnami"
+#   chart      = "postgresql"
 
-  depends_on = [
-    kubectl_manifest.postgres-secrets,
-    kubectl_manifest.postgres-init,
-    kubectl_manifest.postgres-pvc
-  ]
-}
+#   depends_on = [
+#     kubectl_manifest.postgres-secrets,
+#     kubectl_manifest.postgres-init,
+#     kubectl_manifest.postgres-pvc
+#   ]
+# }

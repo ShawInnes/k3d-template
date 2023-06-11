@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: seq
+  namespace: argocd
+spec:
+  project: default
+  
+  source:
+    repoURL: 'https://helm.datalust.co'
+    targetRevision: 2023.1.9133
+    chart: seq
+    helm:
+      values: |
+        image:
+          tag: 2023.2
+
+        firstRunAdminUsername: "admin"
+        firstRunAdminPasswordHash: "FDiO9R8cfcxa3NKH2C3B4gKrpRC34pNZB+HMsQtk+Tqwo6swwA=="
+
+        persistence:
+          enabled: true
+          existingClaim: seq
+
+        resources:
+          limits:
+            memory: 2Gi
+
+        ingress:
+          annotations:
+            kubernetes.io/ingress.class: nginx
+
+        ui:
+          ingress:
+            enabled: true
+            path: /
+            hosts:
+              - seq.localtest.me
+
+        ingestion:
+          ingress:
+            enabled: true
+            path: /
+            hosts:
+              - ingestion.seq.localtest.me
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: seq
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
