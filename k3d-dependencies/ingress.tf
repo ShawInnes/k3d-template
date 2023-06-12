@@ -6,9 +6,9 @@ resource "kubernetes_namespace" "ingress-nginx" {
 
 # https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
 resource "helm_release" "nginx-controller" {
-  name       = "nginx-controller"
-  repository = "oci://registry-1.docker.io/bitnamicharts"
-  chart      = "nginx-ingress-controller"
+  name       = "ingress-nginx"
+  repository = "https://kubernetes.github.io/ingress-nginx"
+  chart      = "ingress-nginx"
 
   set {
     name  = "tcp.5432"
