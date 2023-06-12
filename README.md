@@ -15,6 +15,7 @@ This is a repo with examples for getting a k3d development environment up and ru
 * [Nginx ingress controller](https://kubernetes.github.io/ingress-nginx)
 * Whoami service, loading configuration from ConfigMaps
 * Reloader for triggered deployment restarts
+* ArgoCD
 
 ## Requirements
 
@@ -22,6 +23,7 @@ This is a repo with examples for getting a k3d development environment up and ru
 * terraform
 * k3d
 * k9s
+* argocd-cli
 
 ## Usage
 
@@ -76,6 +78,21 @@ Your k3d kubernetes cluster is now started.  You can confirm this by running `ku
 
 1. `cd k3d-workload`
 2. `kubectl --context k3d-dev apply -f .`
+
+``` bash
+REPO=git@github.com:{UserName}/{RepoName}.git
+
+argocd login argocd.localtest.me
+argocd repo add $REPO --ssh-private-key-path ~/.ssh/argocd
+
+argocd app create api-development --repo $REPO --path api/environments/development --dest-server https://kubernetes.default.svc --dest-namespace development
+argocd app create api-staging --repo $REPO --path api/environments/staging --dest-server https://kubernetes.default.svc --dest-namespace staging
+argocd app create api-production --repo $REPO --path api/environments/production --dest-server https://kubernetes.default.svc --dest-namespace production
+
+argocd app sync --project default
+
+http://whoami.development.localtest.me/
+```
 
 You can now access your cluster using kubectl or k9s
 
