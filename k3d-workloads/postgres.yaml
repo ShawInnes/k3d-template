@@ -1,3 +1,5 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -25,7 +27,14 @@ spec:
             enabled: true
             existingClaim: postgres
             mountPath: /bitnami/postgresql
-            subPath: ""
+
+        auth:
+          enablePostgresUser: true
+          existingSecret: postgres-secrets
+          secretKeys:
+            adminPasswordKey: postgres-password
+            userPasswordKey: password
+            replicationPasswordKey: replication-password          
 
   destination:
     server: 'https://kubernetes.default.svc'

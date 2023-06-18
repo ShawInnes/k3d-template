@@ -1,3 +1,12 @@
+locals {
+  databases = setunion(toset(var.databases), toset(var.environments))
+  
+  databases_map = {
+    for database in setunion(toset(var.databases), toset(var.environments)) :
+    database => database # 
+    # random_password.database[database].result
+  }
+}
 
 resource "kubernetes_namespace" "postgres" {
   metadata {
@@ -21,40 +30,24 @@ data:
 YAML
 }
 
-resource "kubectl_manifest" "postgres-pvc" {
-  yaml_body = <<PVC
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: postgres
-  namespace: ${kubernetes_namespace.postgres.id}
-spec:
-  storageClassName: local-path
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 8Gi
-PVC
+# This should be used to create random passwords
+# resource "random_password" "database" {
+#   for_each = local.databases
+#   length   = 16
+#   special  = false
+# }
+
+locals {
+  secrets_map = tomap({
+    "postgres-password" = "postgres"
+    "password" = "postgres"
+    "replication-password" = "postgres"
+  })
 }
 
-# # https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
-# resource "helm_release" "postgresql" {
-#   name      = "postgres"
-#   namespace = kubernetes_namespace.postgres.id
-#   wait      = true
-#   timeout   = 600
-
-#   values = [
-#     "${file("./k8s/postgres-values.yaml")}"
-#   ]
-
-#   repository = "https://charts.bitnami.com/bitnami"
-#   chart      = "postgresql"
-
-#   depends_on = [
-#     kubectl_manifest.postgres-secrets,
-#     kubectl_manifest.postgres-init,
-#     kubectl_manifest.postgres-pvc
-#   ]
-# }
+resource "kubectl_manifest" "postgres-secrets" {
+  yaml_body = templatefile("./k8s/postgres-secrets.tftpl", {
+    namespace = kubernetes_namespace.postgres.id
+    databases = merge(local.databases_map, local.secrets_map)
+  })
+}

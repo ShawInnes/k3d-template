@@ -72,7 +72,7 @@ Your k3d kubernetes cluster is now started.  You can confirm this by running `ku
 1. `cd k3d-dependencies`
 2. `terraform init`
 3. `terraform apply -auto-approve`
-
+4. `kubectl --namespace cert-manager --output json get secret root-secret | jq -r '.data."ca.crt"' | base64 -`
 
 ### Step 3. **k3d-workloads** directory
 
@@ -80,10 +80,12 @@ Your k3d kubernetes cluster is now started.  You can confirm this by running `ku
 2. `kubectl --context k3d-dev apply -f .`
 
 ``` bash
-REPO=git@github.com:{UserName}/{RepoName}.git
+export REPO=git@github.com:HeyLemonade/hey-lemonade-argocd.git
 
 argocd login argocd.localtest.me
 argocd repo add $REPO --ssh-private-key-path ~/.ssh/argocd
+
+argocd app create seq --repo $REPO --file environments/development/seq.yaml --dest-namespace seq
 
 argocd app create api-development --repo $REPO --path api/environments/development --dest-server https://kubernetes.default.svc --dest-namespace development
 argocd app create api-staging --repo $REPO --path api/environments/staging --dest-server https://kubernetes.default.svc --dest-namespace staging

@@ -1,3 +1,5 @@
+# https://github.com/datalust/helm.datalust.co/blob/main/charts/seq/values.yaml
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:

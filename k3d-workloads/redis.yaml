@@ -1,3 +1,5 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/redis/values.yaml
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:

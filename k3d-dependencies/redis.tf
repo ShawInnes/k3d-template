@@ -38,23 +38,3 @@ spec:
       storage: 8Gi
 PVC
 }
-
-# # https://github.com/bitnami/charts/blob/main/bitnami/redis/values.yaml
-# resource "helm_release" "redis" {
-#   name      = "redis"
-#   namespace = kubernetes_namespace.redis.id
-#   wait      = true
-#   timeout   = 600
-
-#   values = [
-#     "${file("./k8s/redis-values.yaml")}"
-#   ]
-
-#   repository = "https://charts.bitnami.com/bitnami"
-#   chart      = "redis"
-
-#   depends_on = [ 
-#     kubectl_manifest.redis-secrets,
-#     kubectl_manifest.redis-pvc
-#    ]
-# }
